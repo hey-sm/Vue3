@@ -1,5 +1,10 @@
 <template>
-  <div class="clock_box" :style="{ backgroundImage: gradient }">
+  <div
+    class="clock_box"
+    :style="{ backgroundImage: gradient }"
+    @click="toggleFullscreen"
+    ref="fullscreenElement"
+  >
     <div class="clock">
       <p ref="time">{{ formattedTime }}</p>
     </div>
@@ -10,14 +15,25 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // 定义样式变量
-const color2 = '#56d5fc'
-const color4 = '#def700'
-const color6 = '#fa3195'
-const gradient = `linear-gradient(135deg, ${color2}, ${color4}, ${color6})`
+// const color2 = '#56d5fc'
+// const color4 = '#def700'
+// const color6 = '#fa3195'
+// const gradient = `linear-gradient(135deg, ${color2}, ${color4}, ${color6})`
 
 const time = ref(null)
+const fullscreenElement = ref(null)
 let intervalId
-
+const toggleFullscreen = () => {
+  if (fullscreenElement.value.requestFullscreen) {
+    fullscreenElement.value.requestFullscreen()
+  } else if (fullscreenElement.value.webkitRequestFullscreen) {
+    // Safari
+    fullscreenElement.value.webkitRequestFullscreen()
+  } else if (fullscreenElement.value.msRequestFullscreen) {
+    // IE/Edge
+    fullscreenElement.value.msRequestFullscreen()
+  }
+}
 // 定义更新时间的函数
 const updateClock = () => {
   const now = new Date()
@@ -72,7 +88,7 @@ body {
   width: 380px;
   height: 80px;
   border-radius: 10px;
-  background-image: linear-gradient(135deg, var(--color2), var(--color4), var(--color6));
+  /* background-image: linear-gradient(135deg, var(--color2), var(--color4), var(--color6)); */
   /* 居中 */
   display: flex;
   justify-content: center;
@@ -102,7 +118,7 @@ body {
   right: 10px;
   top: 10px;
   bottom: 10px;
-  background-color: #2b2a2a;
+  /* background-color: #2b2a2a; */
   border-radius: 8px;
   display: flex;
   justify-content: center;
