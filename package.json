@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "amis": "^6.5.0",
     "element-plus": "^2.7.3",
     "pinia": "^2.1.7",
     "pinyin-match": "^1.2.5",
